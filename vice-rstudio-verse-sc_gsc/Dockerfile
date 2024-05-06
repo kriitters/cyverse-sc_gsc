@@ -1,29 +1,36 @@
 # Dockerfile to run spatcon and grayspatcon scripts in RStudio server
 # Built on rstudio-verse (Tyson Swetnam) which is built on rocker/verse
-#
+# Hint: look at scripts in /rocker_scripts to see what's installed.
 # Setup in the image:
-# Rstudio and nginx servers running in cyverse-like environment
+# Rstudio running in cyverse-like environment
 # The user is 'rstudio', password is 'rstudio1'
 # Home directory is /home/rstudio
 # Cyverse directories start at /home/rstudio/data-store
 #	- when run on CyVerse the user's home and data-store directories appear in there
 # 
 # Additions
-# start from the above, add things to make new image like vice-rstudio-verse-sc-gsc
+# start from the above, add things to make new image vice-rstudio-verse-sc-gsc
 # the run command is then
 # docker run -it --rm -p 8787:80 -e REDIRECT_URL=http://localhost:8787 vice-rstudio-verse-sc_gsc:latest
-# install several R libraries
+# update.packages, and install several R libraries
 # amend directory structure copy various files into the image
 # use the same ENTRYPOINT as rstudio-verse
 #
+# Added second Rscript to install FHM requested libraries for FIA, raster etc
+# 
 # Use the Swetnam image supporting RStudio and nginx servers on cyverse
 FROM harbor.cyverse.org/vice/rstudio/verse:latest
 
 # the default USER is rstudio, so use sudo for some things
-# install R packages to support scripts (gdalUtilities, terra) and shiny apps (shinyFiles, shinyjs)
+# additional R install scripts include update.packages()
+# install R packages to support SC and GSC scripts (gdalUtilities, terra, tidyr) 
 COPY install_packages.R /install_packages.R
-RUN Rscript /install_packages.R
+RUN sudo Rscript /install_packages.R
 RUN sudo rm -f /install_packages.R
+# install R packages to support FIA work (doParallel, sp, FIESTA, raster, rFIA) 
+COPY install_packages_FIAsupport.R /install_packages_FIAsupport.R
+RUN sudo Rscript /install_packages_FIAsupport.R
+RUN sudo rm -f /install_packages_FIAsupport.R
 
 # --- grayspatcon
 # force empty input, output, and logfiles directories to exist

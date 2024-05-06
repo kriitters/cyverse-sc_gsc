@@ -16,7 +16,8 @@ FROM harbor.cyverse.org/vice/cli/bash:latest
 # default user is "jovyan", home dir /home/jovyan, sudo priv
 
 # ########### Update / upgrade ###########
-RUN sudo apt-get update && sudo apt-get upgrade -y  \
+RUN sudo apt-get update \
+	# && sudo apt-get upgrade -y  \
     && sudo apt-get install apt-utils dialog -y \
 	&& sudo apt-get autoremove -y \
     && sudo apt-get clean all
