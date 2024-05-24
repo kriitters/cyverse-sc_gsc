@@ -31,6 +31,10 @@ RUN sudo rm -f /install_packages.R
 COPY install_packages_FIAsupport.R /install_packages_FIAsupport.R
 RUN sudo Rscript /install_packages_FIAsupport.R
 RUN sudo rm -f /install_packages_FIAsupport.R
+# install R packages to support Chris Mihiar
+COPY install_packages_Mihiar.R /install_packages_Mihiar.R
+RUN sudo Rscript /install_packages_Mihiar.R
+RUN sudo rm -f /install_packages_Mihiar.R
 
 # --- grayspatcon
 # force empty input, output, and logfiles directories to exist
@@ -56,4 +60,5 @@ ADD spatcon/01_input /home/rstudio/spatcon/01_input
 #
 # Same as base image:
 ENTRYPOINT ["/usr/local/bin/run.sh"]
+#docker run -it --rm -p 8787:80 -e REDIRECT_URL=http://localhost:8787 harbor.cyverse.org/usfs/kriitters/rstudio_scgsc:latest
 #docker run -it --rm -p 8787:80 -e REDIRECT_URL=http://localhost:8787 vice-rstudio-verse-gsc:latest
