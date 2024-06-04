@@ -46,7 +46,7 @@ if(!file.exists("02_code/grayspatcon_lin64")) {
   stop("Invalid working directory")
 }
 # V5: get the CyVerse user name and set directory names
-# The following works only on Cloud Shell images
+# The following works only on Cloud Shell or Ubuntu desktop images
 # CyVerseUser <- Sys.getenv("IPLANT_USER")
 # This works in either Cloud Shell or RStudio
 cmd <-sprintf("ls /data-store/iplant/home")
@@ -108,6 +108,7 @@ for (i in 1:length(tif_files)) {
     print("Skipping to next image.")
     next
   }
+	print(paste("Output file path: ", outfile_path))
   # gdal_translate also writes an envi-style header file (gscinput.hdr) that will be used later.
   gdal_translate(gscinput_tif, "gscinput", of="ENVI")
   # loop over parameter files
@@ -250,11 +251,14 @@ for (i in 1:length(tif_files)) {
           file.remove("gscoutput.bsq")
           file.remove("gscoutput.hdr")
           file.remove("gscpars.txt")
-          #V5. 4 lines added
+          #V5. 7 lines added
           file.remove("fubar")
           if(file.exists("fubar.xml")) {
             file.remove("fubar.xml")
           }
+		  if(file.exists("fubar.aux.xml")) {
+            file.remove("fubar.aux.xml")
+          }	  
           # remove any other .xml files in output directory
           #V5. one line change
           xml_files <- list.files(outfile_path, pattern = '(?i)\\.xml$', full.names=TRUE)
@@ -295,6 +299,9 @@ for (i in 1:length(tif_files)) {
 } # end of loop over all files
 # Log file:
 file.copy(logname, extlogname, overwrite=TRUE)
+if(file.exists(logname)) {
+            file.remove(logname)
+}
 print(extlogname)
 # A GDAL message in the console above this line probably 
 #   indicates a non-tif input image; that image was skipped.

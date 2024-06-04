@@ -1,5 +1,5 @@
 # Dockerfile to create an RStudio demonstration app for USFS
-#   Includes grayspatcon to illustrate scripts and folder setup.
+#   Includes grayspatcon to illustrate scripts and folder setups.
 # Kurt Riitters. May 2024.
 # Built on rstudio-verse (Tyson Swetnam) which is built on rocker/verse
 # The user is 'rstudio', password is 'rstudio1'
@@ -27,6 +27,8 @@ RUN sudo rm -f /install_packages_FIAsupport.R
 COPY install_packages_Mihiar.R /install_packages_Mihiar.R
 RUN sudo Rscript /install_packages_Mihiar.R
 RUN sudo rm -f /install_packages_Mihiar.R
+# copy tutorial script(s)
+COPY RStudio_Tutorial_1.R /home/rstudio/RStudio_Tutorial_1.R
 
 # Install grayspatcon
 # force empty input, output, and logfiles directories to exist
