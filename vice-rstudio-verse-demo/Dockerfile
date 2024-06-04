@@ -27,8 +27,11 @@ RUN sudo rm -f /install_packages_FIAsupport.R
 COPY install_packages_Mihiar.R /install_packages_Mihiar.R
 RUN sudo Rscript /install_packages_Mihiar.R
 RUN sudo rm -f /install_packages_Mihiar.R
+
+# Directory for demos
+WORKDIR /home/rstudio/demo
 # copy tutorial script(s)
-COPY RStudio_Tutorial_1.R /home/rstudio/RStudio_Tutorial_1.R
+COPY RStudio_Tutorial_1.R /home/rstudio/demo/RStudio_Tutorial_1.R
 
 # Install grayspatcon
 # force empty input, output, and logfiles directories to exist
