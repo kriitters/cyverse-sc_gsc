@@ -1,5 +1,0 @@
-update.packages(ask = FALSE)
-devtools::install_github('leeper/prediction')
-devtools::install_github('leeper/margins')
-devtools::install_github('familyforestresearchcenter/nwos')
-install.packages("zoo")

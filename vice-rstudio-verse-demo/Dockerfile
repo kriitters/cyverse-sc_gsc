@@ -19,32 +19,8 @@ FROM harbor.cyverse.org/vice/rstudio/verse:latest
 COPY install_packages.R /install_packages.R
 RUN sudo Rscript /install_packages.R
 RUN sudo rm -f /install_packages.R
-# install R packages to support FIA work (doParallel, sp, FIESTA, raster, rFIA) 
-COPY install_packages_FIAsupport.R /install_packages_FIAsupport.R
-RUN sudo Rscript /install_packages_FIAsupport.R
-RUN sudo rm -f /install_packages_FIAsupport.R
-# install R packages to support Chris Mihiar
-COPY install_packages_Mihiar.R /install_packages_Mihiar.R
-RUN sudo Rscript /install_packages_Mihiar.R
-RUN sudo rm -f /install_packages_Mihiar.R
-
-# Directory for demos
-WORKDIR /home/rstudio/demo
-# copy tutorial script(s)
-COPY RStudio_Tutorial_1.R /home/rstudio/demo/RStudio_Tutorial_1.R
-
-# Install grayspatcon
-# force empty input, output, and logfiles directories to exist
-# Some scripts ignore these and use the permanent data-store instead.
-WORKDIR /home/rstudio/grayspatcon/01_input
-WORKDIR /home/rstudio/grayspatcon/03_output
-WORKDIR /home/rstudio/grayspatcon/05_logfiles
-# Copy code and documentation files (ADD copies the contents of a directory, not the directory itself)
-ADD grayspatcon/02_code /home/rstudio/grayspatcon/02_code
-ADD grayspatcon/04_documentation /home/rstudio/grayspatcon/04_documentation
-# Copy any test files to rstudio input directory
-ADD grayspatcon/01_input /home/rstudio/grayspatcon/01_input
-#
+# Add demo script
+ADD RStudio_Tutorial_1.R /home/rstudio/demo/RStudio_Tutorial_1.R
 #
 # Same as base image: Among other things this sets up the iRODS environment for dynamic links to data-store
 ENTRYPOINT ["/usr/local/bin/run.sh"]
