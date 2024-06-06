@@ -12,10 +12,9 @@ CyVerse deployment of SpatCon.c (SC) and GraySpatCon (GSC)
 |        |-- spatcon  
 |        |-- grayspatcon  
 |-- vice-rstudio-verse-demo:  
-|--	   Used for FS RStudio demo, includes GSC to illustrate R scripts  
-|--    SC and GSC on Tyson Swetnam's CyVerse DE VICE app "Rocker RStudio Verse"  
+|--	   Used for FS RStudio demo  
+|--    From Tyson Swetnam's CyVerse DE VICE app "Rocker RStudio Verse"  
 |      vice/rstudio/verse:latest   
-|        |-- grayspatcon 
 |--  vice-cli-bash-R_gsc_sc  
 |      SC and GSC on Tyson Swetnam's CyVerse DE VICE app "Cloud Shell"  
 |      This adds ubuntu packages needed to run R CLI apps, and installs R libraries needed to run the scripts.  
