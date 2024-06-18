@@ -1,7 +1,0 @@
-update.packages(ask = FALSE)
-install.packages("doParallel")
-install.packages("sp")
-install.packages("FIESTA")
-install.packages("raster")
-install.packages("operators")
-devtools::install_github('hunter-stanke/rFIA')
