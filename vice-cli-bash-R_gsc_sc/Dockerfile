@@ -28,28 +28,23 @@ COPY install_packages.R /install_packages.R
 RUN sudo Rscript /install_packages.R
 RUN sudo rm -f /install_packages.R
 # Create directory structure with example data, code, docs etc
-# --- grayspatcon
-# force empty input, output, and logfiles directories to exist
-WORKDIR /home/jovyan/grayspatcon/01_input
-WORKDIR /home/jovyan/grayspatcon/03_output
-WORKDIR /home/jovyan/grayspatcon/05_logfiles
+# --- Install grayspatcon
+COPY GraySpatCon_CyVerse.R /home/jovyan/GraySpatCon_CyVerse.R
 # Copy code and documentation files (ADD copies the contents of a directory, not the directory itself)
-ADD grayspatcon/02_code /home/jovyan/grayspatcon/02_code
-ADD grayspatcon/04_documentation /home/jovyan/grayspatcon/04_documentation
-# Copy any test files to jovyan input directory
-ADD grayspatcon/01_input /home/jovyan/grayspatcon/01_input
+ADD grayspatcon/code /home/jovyan/grayspatcon/code
+ADD grayspatcon/documentation /home/jovyan/grayspatcon/documentation
+# Copy test files (tif imagse and parameter files)
+ADD grayspatcon/grayspatcon_input /home/jovyan/grayspatcon/grayspatcon_input
+RUN sudo chown -R jovyan /home/jovyan/grayspatcon*
 #
-# --- spatcon
-# force empty input, output, and logfiles directories to exist
-WORKDIR /home/jovyan/spatcon/01_input
-WORKDIR /home/jovyan/spatcon/03_output
-WORKDIR /home/jovyan/spatcon/05_logfiles
-# Copy code and documentation files 
-ADD spatcon/02_code /home/jovyan/spatcon/02_code
-ADD spatcon/04_documentation /home/jovyan/spatcon/04_documentation
-# Copy any test files to jovyan input directory
-ADD spatcon/01_input /home/jovyan/spatcon/01_input
-WORKDIR /home/jovyan
+# --- Install spatcon
+COPY SpatCon_CyVerse.R /home/jovyan/SpatCon_CyVerse.R
+# Copy code and documentation files (ADD copies the contents of a directory, not the directory itself)
+ADD spatcon/code /home/jovyan/spatcon/code
+ADD spatcon/documentation /home/jovyan/spatcon/documentation
+# Copy test files (tif imagse and parameter files)
+ADD spatcon/spatcon_input /home/jovyan/spatcon/spatcon_input
+RUN sudo chown -R jovyan /home/jovyan/spatcon*
 #
 
 
