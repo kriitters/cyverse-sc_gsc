@@ -24,10 +24,6 @@ library(gdalUtilities)
 library(tidyr)
 library(dplyr)
 
-# Check for proper installation
-if(!file.exists("~/grayspatcon")) {
-  stop("grayspatcon is not installed. Please check your installation")
-}
 setwd("~/grayspatcon")
 # In auto-run mode the input data are in a user-selected directory in /data-store/input/
 cmd <-sprintf("ls /data-store/input")
@@ -37,24 +33,30 @@ infile_path <- sprintf("/data-store/input/%s", user_inputdir)
 
 # Set the output directory to the user's home/Analyses/xxx symlink. 
 outfile_path <- sprintf("/data-store/output")
+# define the logfiles
+now <- Sys.time()  # This is UTC time
+now <-paste0(format(now, "%m%d%Y_%Z%H%M%S")) 				# converts posixct to chars, no spaces or colons
+extlogname <- sprintf("%s/GraySpatCon_%s.log", outfile_path, now) 	# external path and filename
+logname <- sprintf("tmplog")							# temporary logfile in container; copied to external at the end
 # get a list of tif and TIF files in the input directory
 # ?i makes it case insensitive, $ excludes .xml, .ovr etc, full names includes path
 tif_files <- list.files(path = infile_path, pattern = '(?i)\\.tif$', full.names=TRUE)
 # ensure at least one file
 if(length(tif_files) == 0){
+  msgline = "No input tif files found."
+  write(msgline, logname, append=TRUE)
+  file.copy(logname, extlogname, overwrite=TRUE)
   stop("No input tif (.tif or .TIF) files found in grayspatcon_input.")
 }
 # get a list of parameters.txt files in the input directory
 par_files <- list.files(path = infile_path, pattern = '(?i)\\.txt$', full.names=TRUE)
 # ensure at least one file
 if(length(par_files) == 0){
+  msgline = "No parameter files found."
+  write(msgline, logname, append=TRUE)
+  file.copy(logname, extlogname, overwrite=TRUE)
   stop("No input parameter (.txt) text files found in grayspatcon_input.")
 }
-# define the logfiles
-now <- Sys.time()  # This is UTC time
-now <-paste0(format(now, "%m%d%Y_%Z%H%M%S")) 				# converts posixct to chars, no spaces or colons
-extlogname <- sprintf("%s/GraySpatCon_%s.log", outfile_path, now) 	# external path and filename
-logname <- sprintf("tmplog")							# temporary logfile in container; copied to external at the end
 # loop over tif files
 for (i in 1:length(tif_files)) {
   # Convert the input from GeoTIFF to BSQ named "gscinput" (no extension)
