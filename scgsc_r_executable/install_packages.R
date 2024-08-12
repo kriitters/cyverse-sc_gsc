@@ -1,4 +1,5 @@
-update.packages(ask = FALSE)
+#update.packages(ask = FALSE)
+install.packages("devtools")
 install.packages("gdalUtilities")
 install.packages("terra")
 install.packages("tidyr")

@@ -1,5 +1,5 @@
 # R script to run GraySpatCon in auto-run mode on CyVerse on CyVerse
-# Kurt Riitters June 2024 for use in CyVerse installation only
+# Kurt Riitters August 2024 for use in CyVerse installation only
 # **********
 # Input files (tif images and parameter files) are read from the user-selected input directory
 #   It is selected at runtime
@@ -25,14 +25,16 @@ library(tidyr)
 library(dplyr)
 
 setwd("~/grayspatcon")
-# In auto-run mode the input data are in a user-selected directory in /data-store/input/
-cmd <-sprintf("ls /data-store/input")
-dirnames <- as.data.frame(system(cmd, intern=TRUE))
-user_inputdir <-dirnames[1,1]
-infile_path <- sprintf("/data-store/input/%s", user_inputdir)
+# The app specifies a user-selected input directory in the external Data Store, 
+#   and allows user naming of the output directory.
+#   Both of these are mounted internally at ~/data-store/. The inputs are automatically downloaded
+#   into the container, and the outputs are automatially written to the external Data Store analyses directory.
+#   The entry.sh script sets environment variables qhich are paths to the internal input and output directories.
+user_inputdir <- Sys.getenv("INDIR")
+infile_path <- sprintf("%s", user_inputdir)
+user_outputdir <- Sys.getenv("OUTDIR")
+outfile_path <- sprintf("%s", user_outputdir)
 
-# Set the output directory to the user's home/Analyses/xxx symlink. 
-outfile_path <- sprintf("/data-store/output")
 # define the logfiles
 now <- Sys.time()  # This is UTC time
 now <-paste0(format(now, "%m%d%Y_%Z%H%M%S")) 				# converts posixct to chars, no spaces or colons

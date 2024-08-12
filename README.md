@@ -6,25 +6,17 @@ CyVerse deployment of SpatCon.c (SC) and GraySpatCon (GSC)
 .  
 |-- AUTHORS.md  
 |-- README.md  
-|-- vice-rstudio-verse-sc_gsc:  
-|      SC and GSC on Tyson Swetnam's CyVerse DE VICE app "Rocker RStudio Verse"  
-|      vice/rstudio/verse:latest  
-|        |-- spatcon  
-|        |-- grayspatcon  
-|-- vice-rstudio-verse-demo:  
-|--	   Used for FS RStudio demo  
-|--    From Tyson Swetnam's CyVerse DE VICE app "Rocker RStudio Verse"  
-|      vice/rstudio/verse:latest   
-|--  vice-cli-bash-R_gsc_sc  
-|      SC and GSC on Tyson Swetnam's CyVerse DE VICE app "Cloud Shell"  
-|      This adds ubuntu packages needed to run R CLI apps, and installs R libraries needed to run the scripts.  
-|        |-- spatcon  
-|        |-- grayspatcon  
-|--  vice-cli-bash-R_gsc_sc_autorun  
-|       Version supporting CyVerse app "r_scgsc_autorun"  
-|       The shell script entry2.sh checks environment variable and runs a script, then starts a bash shell to indicate the script is finished    
-|       The CyVerse app requires user selection of input directory   
-|
+|-- vice-rstudio-verse-sc_gsc:  CyVerse DE VICE tool.    
+    SC and GSC on Tyson Swetnam's "Rocker RStudio Verse"  
+|-- vice-rstudio-verse-demo:  CyVerse DE VICE tool.  
+  	Used for FS RStudio demo.  
+    R packages for RPA and FIA on Tyson Swetnam's "Rocker RStudio Verse"  
+|-- vice-cli-R_gsc_sc: CyVerse DE VICE tool.    
+    SC and GSC on Tyson Swetnam's "Cloud Shell"    
+|-- scgsc_r_executable:  CyVerse executable tool.  
+    SC and GSC on rocker/r-ver:4.1.1 to be run as CyVerse executable.   
+|-- rexec1_2 and rexec2_2: Saved for CyVerse trouble-shooting "R library not found"" problem.  
+
 </pre>
 ## Additional Information  
 The repository includes Dockerfiles, R scripts, C executables, examples, and documentaton. 
